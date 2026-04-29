@@ -8,7 +8,7 @@ const TEAM = [
     nombre: 'Alberto Yépiz',
     wa: '5216621147374',
     foto: 'assets/Alberto yepiz.png',
-    estados: ['Baja California', 'Baja California Sur', 'Sonora', 'Sinaloa', 'Nayarit'],
+    estados: ['Baja California', 'Baja California Sur', 'Sonora', 'Sinaloa', 'Chihuahua'],
     color: '#4f8ef7',
   },
   {
@@ -18,7 +18,7 @@ const TEAM = [
     nombre: 'Luis Franco',
     wa: '5218119905772',
     foto: 'assets/luis Franco.jpg',
-    estados: ['Chihuahua', 'Durango', 'Coahuila', 'Nuevo León', 'Tamaulipas', 'Zacatecas'],
+    estados: ['Durango', 'Coahuila', 'Nuevo León', 'Tamaulipas', 'Zacatecas'],
     color: '#a78bfa',
   },
   {
@@ -28,7 +28,7 @@ const TEAM = [
     nombre: 'Fabiola Martinez',
     wa: '5213316025928',
     foto: 'assets/Fabiola Martinez.png',
-    estados: ['Jalisco', 'Colima', 'Michoacán', 'Aguascalientes', 'Guanajuato'],
+    estados: ['Jalisco', 'Colima', 'Michoacán', 'Aguascalientes', 'Guanajuato', 'Nayarit'],
     color: '#f472b6',
   },
   {
@@ -84,7 +84,7 @@ const TEAM = [
     zona: 'Zona CDMX',
     zonaShort: 'CDMX',
     nombre: 'Yanser Rebollo',
-    rol: 'Asesor Académico Richmond Pro',
+    rol: 'Académico Richmond Pro',
     wa: '5215666689003',
     foto: 'assets/yanser Rebollo.png',
     estados: ['Ciudad de México'],
