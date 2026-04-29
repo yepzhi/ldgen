@@ -6,7 +6,6 @@ const TEAM = [
     zona: 'Zona Noroeste',
     zonaShort: 'Noroeste',
     nombre: 'Alberto Yépiz',
-    rol: 'Asesor Académico',
     wa: '5216621147374',
     foto: 'assets/yepiz.png',
     estados: ['Baja California', 'Baja California Sur', 'Sonora', 'Sinaloa', 'Nayarit'],
@@ -18,7 +17,6 @@ const TEAM = [
     zona: 'Zona Norte',
     zonaShort: 'Norte',
     nombre: 'Luis Franco',
-    rol: 'Asesor Académico',
     wa: '5218119905772',
     foto: 'assets/luis.jpg',
     estados: ['Chihuahua', 'Durango', 'Coahuila', 'Nuevo León', 'Tamaulipas', 'Zacatecas'],
@@ -30,7 +28,6 @@ const TEAM = [
     zona: 'Zona Occidente',
     zonaShort: 'Occidente',
     nombre: 'Fabiola Martinez',
-    rol: 'Asesora Académica',
     wa: '5213316025928',
     estados: ['Jalisco', 'Colima', 'Michoacán', 'Aguascalientes', 'Guanajuato'],
     color: '#f472b6',
@@ -41,7 +38,6 @@ const TEAM = [
     zona: 'Zona Sureste',
     zonaShort: 'Sureste',
     nombre: 'Arturo Mendoza',
-    rol: 'Asesor Académico',
     wa: '5215537339886',
     foto: 'assets/arturo.jpg',
     estados: ['Oaxaca', 'Chiapas', 'Tabasco', 'Campeche', 'Yucatán', 'Quintana Roo'],
@@ -53,7 +49,6 @@ const TEAM = [
     zona: 'Zona Puebla / Veracruz',
     zonaShort: 'Puebla / Veracruz',
     nombre: 'Joel Navor',
-    rol: 'Asesor Académico',
     wa: '522211057576',
     estados: ['Puebla', 'Tlaxcala', 'Morelos', 'Guerrero', 'Veracruz'],
     color: '#fb923c',
@@ -64,7 +59,6 @@ const TEAM = [
     zona: 'Zona Toluca / CDMX',
     zonaShort: 'Toluca / CDMX',
     nombre: 'Edgar Espinoza',
-    rol: 'Asesor Académico',
     wa: '526641234572',
     estados: ['Estado de México', 'Hidalgo', 'Querétaro', 'San Luis Potosí'],
     color: '#f4c94e',
@@ -75,7 +69,6 @@ const TEAM = [
     zona: 'Zona CDMX',
     zonaShort: 'CDMX',
     nombre: 'Miguel Campero',
-    rol: 'Asesor Académico',
     wa: '5218116318251',
     estados: ['Ciudad de México'],
     color: '#60a5fa',
@@ -86,7 +79,6 @@ const TEAM = [
     zona: 'Zona CDMX',
     zonaShort: 'CDMX',
     nombre: 'Daniel Morales',
-    rol: 'Asesor Académico',
     wa: '5215537339631',
     estados: ['Ciudad de México'],
     color: '#818cf8',
@@ -337,7 +329,7 @@ function renderTeamSection() {
           <div class="team-card-info">
             <div class="team-card-zona" style="color:${m.color}">${m.zonaShort}</div>
             <div class="team-card-name">${m.nombre}</div>
-            <div class="team-card-rol">${m.rol}</div>
+            ${m.rol ? `<div class="team-card-rol">${m.rol}</div>` : ''}
           </div>
           <a
             class="team-card-wa"
