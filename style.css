@@ -601,6 +601,25 @@ body {
 .team-heart { -webkit-text-fill-color: initial; }
 .team-sub { color: var(--c-muted); font-size: 0.95rem; }
 
+/* Social icons row in team header */
+.team-socials {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 0.85rem;
+}
+.team-social-link {
+  color: rgba(160, 185, 230, 0.55);   /* uniform blue-gray */
+  text-decoration: none;
+  display: flex;
+  transition: color 0.2s, transform 0.2s;
+}
+.team-social-link:hover {
+  color: rgba(160, 185, 230, 0.95);
+  transform: translateY(-3px);
+}
+
+
 /* ── Map ───────────────────────────────── */
 .team-map-wrap {
   position: relative;

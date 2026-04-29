@@ -275,10 +275,24 @@ function renderTeamSection() {
           <circle cx="7.5" cy="8" r="1" fill="currentColor"/>
           <circle cx="12.5" cy="8" r="1" fill="currentColor"/>
         </svg>
-        Contacta Ahora con un solo Click!
+        Contacta Ahora, con un Click!
       </div>
       <h2 class="team-title">Equipo Richmond Pro <span class="team-heart">💙</span> México</h2>
-      <p class="team-sub">Toca sobre un contacto y recibe atención pronto!</p>
+      <p class="team-sub">Toca sobre un contacto y recibe atención personalizada!</p>
+      <div class="team-socials">
+        <a href="https://www.instagram.com/richmondproglobal/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="team-social-link">
+          <svg viewBox="0 0 24 24" fill="none" width="28" height="28"><rect x="2" y="2" width="20" height="20" rx="6" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor"/></svg>
+        </a>
+        <a href="https://www.facebook.com/RichmondMx" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="team-social-link">
+          <svg viewBox="0 0 24 24" fill="none" width="28" height="28"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/richmond-elt-mexico/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="team-social-link">
+          <svg viewBox="0 0 24 24" fill="none" width="28" height="28"><rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="1.6"/><path d="M7 10v7M7 7v.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M11 17v-4a2 2 0 0 1 4 0v4M11 10v7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="https://richmondpro.global/" target="_blank" rel="noopener noreferrer" aria-label="Website" class="team-social-link">
+          <svg viewBox="0 0 24 24" fill="none" width="28" height="28"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 3c-2.5 3-4 5.5-4 9s1.5 6 4 9M12 3c2.5 3 4 5.5 4 9s-1.5 6-4 9M3 12h18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </a>
+      </div>
     </div>
 
     <div class="team-map-wrap">
