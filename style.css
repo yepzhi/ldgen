@@ -567,10 +567,13 @@ body {
   flex-direction: column;
   gap: 2rem;
   padding-bottom: 1rem;
+  position: relative;
+  z-index: 1;          /* keeps section above glass-card orbs */
+  isolation: isolate;  /* new stacking context — Leaflet panes stay inside */
 }
 
 /* ── Team header ───────────────────────── */
-.team-header { text-align: center; }
+.team-header { text-align: center; position: relative; z-index: 2; }
 
 .team-header-badge {
   display: inline-flex;
@@ -609,10 +612,13 @@ body {
   margin-top: 0.85rem;
 }
 .team-social-link {
-  color: rgba(160, 185, 230, 0.55);   /* uniform blue-gray */
+  color: rgba(160, 185, 230, 0.55);
   text-decoration: none;
   display: flex;
   transition: color 0.2s, transform 0.2s;
+  position: relative;
+  z-index: 10;   /* above Leaflet panes */
+  cursor: pointer;
 }
 .team-social-link:hover {
   color: rgba(160, 185, 230, 0.95);
@@ -624,18 +630,17 @@ body {
 .team-map-wrap {
   position: relative;
   border-radius: 20px;
+  overflow: hidden;           /* MUST stay: contains Leaflet's high-z panes */
   border: 1px solid var(--c-border);
   box-shadow: 0 16px 48px rgba(0,0,0,0.4);
-  /* NO overflow:hidden — it breaks Leaflet tile rendering */
-  isolation: isolate;
+  z-index: 0;                 /* below cards and social row */
 }
 
 #team-map {
   height: 380px;
   width: 100%;
   background: #0d1020;
-  border-radius: 20px;  /* radius on the map itself instead */
-  z-index: 0;
+  display: block;
 }
 
 .map-legend {
@@ -749,6 +754,8 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
   gap: 0.85rem;
+  position: relative;
+  z-index: 2;  /* above map wrap */
 }
 
 .team-card {
@@ -810,6 +817,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  position: relative;
+  z-index: 2;
 }
 .managers-label {
   font-size: 0.75rem;
