@@ -7,7 +7,7 @@ const TEAM = [
     zonaShort: 'Noroeste',
     nombre: 'Alberto Yépiz',
     wa: '5216621147374',
-    foto: 'assets/yepiz.png',
+    foto: 'assets/Alberto yepiz.png',
     estados: ['Baja California', 'Baja California Sur', 'Sonora', 'Sinaloa', 'Nayarit'],
     color: '#4f8ef7',
     lat: 29.5, lng: -113.0
@@ -18,7 +18,7 @@ const TEAM = [
     zonaShort: 'Norte',
     nombre: 'Luis Franco',
     wa: '5218119905772',
-    foto: 'assets/luis.jpg',
+    foto: 'assets/luis Franco.jpg',
     estados: ['Chihuahua', 'Durango', 'Coahuila', 'Nuevo León', 'Tamaulipas', 'Zacatecas'],
     color: '#a78bfa',
     lat: 26.5, lng: -101.5
@@ -29,6 +29,7 @@ const TEAM = [
     zonaShort: 'Occidente',
     nombre: 'Fabiola Martinez',
     wa: '5213316025928',
+    foto: 'assets/Fabiola Martinez.png',
     estados: ['Jalisco', 'Colima', 'Michoacán', 'Aguascalientes', 'Guanajuato'],
     color: '#f472b6',
     lat: 20.5, lng: -103.2
@@ -39,7 +40,7 @@ const TEAM = [
     zonaShort: 'Sureste',
     nombre: 'Arturo Mendoza',
     wa: '5215537339886',
-    foto: 'assets/arturo.jpg',
+    foto: 'assets/Arturo Mendoza.png',
     estados: ['Oaxaca', 'Chiapas', 'Tabasco', 'Campeche', 'Yucatán', 'Quintana Roo'],
     color: '#34d399',
     lat: 18.0, lng: -90.5
@@ -50,6 +51,7 @@ const TEAM = [
     zonaShort: 'Puebla / Veracruz',
     nombre: 'Joel Navor',
     wa: '522211057576',
+    foto: 'assets/Joel Navor.jpg',
     estados: ['Puebla', 'Tlaxcala', 'Morelos', 'Guerrero', 'Veracruz'],
     color: '#fb923c',
     lat: 18.8, lng: -96.5
@@ -80,6 +82,7 @@ const TEAM = [
     zonaShort: 'CDMX',
     nombre: 'Daniel Morales',
     wa: '5215537339631',
+    foto: 'assets/Daniel Morales.png',
     estados: ['Ciudad de México'],
     color: '#818cf8',
     lat: 19.38, lng: -99.18
@@ -91,7 +94,7 @@ const TEAM = [
     nombre: 'Yanser Rebollo',
     rol: 'Asesor Académico Richmond Pro',
     wa: '5215666689003',
-    foto: 'assets/yanser2.png',
+    foto: 'assets/yanser Rebollo.png',
     estados: ['Ciudad de México'],
     color: '#e879f9',
     lat: 19.33, lng: -99.25
@@ -99,9 +102,9 @@ const TEAM = [
 ];
 
 const MANAGERS = [
-  { nombre: 'Michelle Gutiérrez', rol: 'Gerente México Sur', wa: '5215532239128', foto: 'assets/michelle.jpg' },
-  { nombre: 'Marco Guerrero',     rol: 'Gerente México Norte', wa: '5215666689044', foto: 'assets/marco.png' },
-  { nombre: 'Manuel Ramírez',     rol: 'Gerente Nacional',   wa: '5215539000043', highlight: true },
+  { nombre: 'Michelle Gutiérrez', rol: 'Gerente México Sur', wa: '5215532239128', foto: 'assets/michelle Gutierrez.jpg' },
+  { nombre: 'Marco Guerrero',     rol: 'Gerente México Norte', wa: '5215666689044' },
+  { nombre: 'Manuel Ramírez',     rol: 'Gerente Nacional',   wa: '5215539000043', highlight: true, foto: 'assets/Manuel Ramirez.png' },
 ];
 
 // Coordenadas por estado
