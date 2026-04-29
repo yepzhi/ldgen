@@ -605,15 +605,18 @@ body {
 .team-map-wrap {
   position: relative;
   border-radius: 20px;
-  overflow: hidden;
   border: 1px solid var(--c-border);
   box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+  /* NO overflow:hidden — it breaks Leaflet tile rendering */
+  isolation: isolate;
 }
 
 #team-map {
   height: 380px;
   width: 100%;
   background: #0d1020;
+  border-radius: 20px;  /* radius on the map itself instead */
+  z-index: 0;
 }
 
 .map-legend {

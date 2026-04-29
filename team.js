@@ -142,23 +142,29 @@ function initTeamMap() {
   const el = document.getElementById('team-map');
   if (!el || teamMap) return;
 
-  // Set explicit height before init to avoid the offset bug
-  el.style.height = '380px';
+  // Force explicit pixel dimensions BEFORE Leaflet touches the container
+  const isMobile = window.innerWidth < 700;
+  el.style.height = isMobile ? '260px' : '380px';
+  el.style.width  = '100%';
 
   teamMap = L.map('team-map', {
     zoomControl: false,
     scrollWheelZoom: false,
     attributionControl: false,
     minZoom: 4,
-    maxZoom: 9
+    maxZoom: 9,
+    preferCanvas: true,           // avoids SVG glitches
+    renderer: L.canvas()
   }).setView([23.6, -102.5], 5);
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
     subdomains: 'abcd',
-    maxZoom: 9
+    maxZoom: 9,
+    updateWhenIdle: false,
+    updateWhenZooming: true
   }).addTo(teamMap);
 
-  // Render permanent zone center markers
+  // Place markers
   TEAM.forEach(member => {
     const icon = L.divIcon({
       html: `<div class="map-state-dot" style="background:${member.color}; box-shadow:0 0 12px ${member.color}99; width:14px; height:14px;"></div>`,
@@ -178,9 +184,22 @@ function initTeamMap() {
     baseMarkers.push(marker);
   });
 
-  // Force Leaflet to recalculate size after full render
-  setTimeout(() => teamMap.invalidateSize(), 100);
-  setTimeout(() => teamMap.invalidateSize(), 400);
+  // Fix tile rendering: invalidateSize then re-center (critical for glass containers)
+  function fixSize() {
+    teamMap.invalidateSize({ pan: false });
+    teamMap.setView([23.6, -102.5], 5, { animate: false });
+  }
+
+  setTimeout(fixSize, 50);
+  setTimeout(fixSize, 250);
+  setTimeout(fixSize, 600);
+
+  // Also fix on window resize
+  window.addEventListener('resize', () => {
+    if (teamMap) {
+      teamMap.invalidateSize({ pan: false });
+    }
+  });
 }
 
 function buildPopupHTML(member, stateName) {
