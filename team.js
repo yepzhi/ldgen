@@ -66,7 +66,7 @@ const TEAM = [
     zonaShort: 'CDMX',
     nombre: 'Miguel Campero',
     wa: '5218116318251',
-    estados: ['Ciudad de México'],
+    estados: ['Ciudad de México', 'Estado de México'],
     color: '#60a5fa',
   },
   {
@@ -76,7 +76,7 @@ const TEAM = [
     nombre: 'Daniel Morales',
     wa: '5215537339631',
     foto: 'assets/Daniel Morales.png',
-    estados: ['Ciudad de México'],
+    estados: ['Ciudad de México', 'Estado de México'],
     color: '#818cf8',
   },
   {
