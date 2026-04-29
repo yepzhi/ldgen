@@ -160,9 +160,7 @@ function initTeamMap() {
     scrollWheelZoom: false,
     attributionControl: false,
     minZoom: 4,
-    maxZoom: 9,
-    maxBounds: MX_BOUNDS,
-    maxBoundsViscosity: 1.0   // ← hard wall, mapa NO escapa del rectángulo
+    maxZoom: 9
   });
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
@@ -185,20 +183,24 @@ function initTeamMap() {
     baseMarkers.push(marker);
   });
 
-  function fixAndFit() {
+  let initialized = false;
+
+  const ro = new ResizeObserver(() => {
+    if (!teamMap) return;
     teamMap.invalidateSize({ pan: false });
-    teamMap.fitBounds(MX_BOUNDS, { padding: [16, 16], animate: false });
-  }
-  setTimeout(fixAndFit, 80);
-  setTimeout(fixAndFit, 400);
+    if (!initialized) {
+      teamMap.fitBounds(MX_BOUNDS, { padding: [16, 16], animate: false });
+      initialized = true;
+      // Optional: apply maxBounds after initial render
+      setTimeout(() => teamMap.setMaxBounds(MX_BOUNDS.pad(0.2)), 500);
+    }
+  });
+  
+  ro.observe(el);
 
   window.addEventListener('resize', () => {
     if (!teamMap) return;
     teamMap.invalidateSize({ pan: false });
-    // Re-snap to bounds if user had panned off edge
-    if (!MX_BOUNDS.contains(teamMap.getCenter())) {
-      teamMap.panInsideBounds(MX_BOUNDS, { animate: true });
-    }
   });
 }
 

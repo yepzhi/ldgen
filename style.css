@@ -635,8 +635,6 @@ body {
   border: 1px solid var(--c-border);
   box-shadow: 0 16px 48px rgba(0,0,0,0.5);
   z-index: 0;
-  /* isolate so Leaflet layers don't leak outside */
-  contain: layout paint;
 }
 
 #team-map {
