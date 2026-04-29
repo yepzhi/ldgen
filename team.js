@@ -93,9 +93,9 @@ const TEAM = [
 ];
 
 const MANAGERS = [
-  { nombre: 'Michelle Gutiérrez', rol: 'Gerente México Sur',   wa: '5215532239128', foto: 'assets/michelle Gutierrez.jpg' },
-  { nombre: 'Marco Guerrero',     rol: 'Gerente México Norte', wa: '5215666689044' },
-  { nombre: 'Manuel Ramírez',     rol: 'Gerente Nacional',     wa: '5215539000043', highlight: true, foto: 'assets/Manuel Ramirez.png' },
+  { nombre: 'Michelle Gutiérrez', rol: 'Gerente México Sur', wa: '5215532239128', foto: 'assets/michelle Gutierrez.jpg' },
+  { nombre: 'Marco Guerrero', rol: 'Gerente México Norte', wa: '5215666689044' },
+  { nombre: 'Manuel Ramírez', rol: 'Gerente Nacional', wa: '5215539000043', highlight: true, foto: 'assets/Manuel Ramirez.png' },
 ];
 
 // ── Estado → miembro primario (último gana si hay duplicados) ──
@@ -104,20 +104,20 @@ TEAM.forEach(m => m.estados.forEach(e => { ESTADO_MEMBER[e] = m; }));
 
 // ── Normalizar nombres del GeoJSON → nuestros nombres ──
 const NAME_NORM = {
-  'México':                          'Estado de México',
-  'Distrito Federal':                'Ciudad de México',
-  'Coahuila de Zaragoza':            'Coahuila',
-  'Michoacán de Ocampo':             'Michoacán',
+  'México': 'Estado de México',
+  'Distrito Federal': 'Ciudad de México',
+  'Coahuila de Zaragoza': 'Coahuila',
+  'Michoacán de Ocampo': 'Michoacán',
   'Veracruz de Ignacio de la Llave': 'Veracruz',
-  'Querétaro Arteaga':               'Querétaro',
-  'Yucatan':                         'Yucatán',
+  'Querétaro Arteaga': 'Querétaro',
+  'Yucatan': 'Yucatán',
 };
 function normName(n) { return NAME_NORM[n] || n; }
 
 // ─── D3 Map ───────────────────────────────────────────────────
-let mapSvg       = null;
-let mapPaths     = null;
-let mapTooltip   = null;
+let mapSvg = null;
+let mapPaths = null;
+let mapTooltip = null;
 let currentMember = null;
 
 function initTeamMap() {
@@ -125,7 +125,7 @@ function initTeamMap() {
   if (!el || mapSvg) return;
 
   // Dimensiones reales del contenedor
-  const W = el.clientWidth  || 600;
+  const W = el.clientWidth || 600;
   const H = el.clientHeight || 380;
 
   // Skeleton mientras carga
@@ -175,7 +175,7 @@ function buildD3Map(el, geo, W, H) {
     .attr('d', pathGen)
     .attr('data-state', d => normName(d.properties.name || d.properties.NAME_1 || ''))
     .attr('fill', d => {
-      const name   = normName(d.properties.name || d.properties.NAME_1 || '');
+      const name = normName(d.properties.name || d.properties.NAME_1 || '');
       const member = ESTADO_MEMBER[name];
       return member ? member.color + '45' : 'rgba(255,255,255,0.06)';
     })
@@ -187,41 +187,41 @@ function buildD3Map(el, geo, W, H) {
   // Tooltip flotante
   mapTooltip = d3.select(el)
     .append('div')
-    .style('position',       'absolute')
+    .style('position', 'absolute')
     .style('pointer-events', 'none')
-    .style('background',     'rgba(6,9,24,0.96)')
-    .style('border',         '1px solid rgba(255,255,255,0.14)')
-    .style('border-radius',  '12px')
-    .style('padding',        '10px 14px')
-    .style('font-family',    'Outfit, sans-serif')
-    .style('font-size',      '13px')
-    .style('color',          '#eef0fb')
-    .style('display',        'none')
-    .style('z-index',        '20')
-    .style('box-shadow',     '0 8px 32px rgba(0,0,0,0.6)')
-    .style('backdrop-filter','blur(12px)')
-    .style('max-width',      '180px');
+    .style('background', 'rgba(6,9,24,0.96)')
+    .style('border', '1px solid rgba(255,255,255,0.14)')
+    .style('border-radius', '12px')
+    .style('padding', '10px 14px')
+    .style('font-family', 'Outfit, sans-serif')
+    .style('font-size', '13px')
+    .style('color', '#eef0fb')
+    .style('display', 'none')
+    .style('z-index', '20')
+    .style('box-shadow', '0 8px 32px rgba(0,0,0,0.6)')
+    .style('backdrop-filter', 'blur(12px)')
+    .style('max-width', '180px');
 
   // Eventos hover / click
   mapPaths
-    .on('mousemove', function(event, d) {
-      const name   = normName(d.properties.name || d.properties.NAME_1 || '');
+    .on('mousemove', function (event, d) {
+      const name = normName(d.properties.name || d.properties.NAME_1 || '');
       const member = ESTADO_MEMBER[name];
-      const rect   = el.getBoundingClientRect();
-      const x      = event.clientX - rect.left;
-      const y      = event.clientY - rect.top;
+      const rect = el.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
 
       if (member) {
         // Highlight este estado
         d3.select(this)
-          .attr('fill',         member.color + 'cc')
-          .attr('stroke',       member.color)
+          .attr('fill', member.color + 'cc')
+          .attr('stroke', member.color)
           .attr('stroke-width', 1.2);
 
         mapTooltip
           .style('display', 'block')
           .style('left', Math.min(x + 14, W - 190) + 'px')
-          .style('top',  Math.max(y - 50, 8)       + 'px')
+          .style('top', Math.max(y - 50, 8) + 'px')
           .html(`
             <div style="color:${member.color};font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">${member.zonaShort}</div>
             <div style="font-weight:700;font-size:13px">${name}</div>
@@ -232,17 +232,17 @@ function buildD3Map(el, geo, W, H) {
         mapTooltip.style('display', 'none');
       }
     })
-    .on('mouseleave', function(event, d) {
+    .on('mouseleave', function (event, d) {
       mapTooltip.style('display', 'none');
-      const name   = normName(d.properties.name || d.properties.NAME_1 || '');
+      const name = normName(d.properties.name || d.properties.NAME_1 || '');
       const member = ESTADO_MEMBER[name];
       d3.select(this)
-        .attr('fill',         getStateFill(name, member))
-        .attr('stroke',       getStateStroke(name, member))
+        .attr('fill', getStateFill(name, member))
+        .attr('stroke', getStateStroke(name, member))
         .attr('stroke-width', getStateStrokeW(name, member));
     })
-    .on('click', function(event, d) {
-      const name   = normName(d.properties.name || d.properties.NAME_1 || '');
+    .on('click', function (event, d) {
+      const name = normName(d.properties.name || d.properties.NAME_1 || '');
       const member = ESTADO_MEMBER[name];
       if (member) onCardClick(member.id);
     });
@@ -274,20 +274,20 @@ function showStateMarkers(member) {
   if (!mapPaths) return;
   mapPaths
     .transition().duration(220)
-    .attr('fill', function(d) {
+    .attr('fill', function (d) {
       const name = normName(d.properties.name || d.properties.NAME_1 || '');
-      const m    = ESTADO_MEMBER[name];
+      const m = ESTADO_MEMBER[name];
       if (!m) return 'rgba(255,255,255,0.04)';
       return m.id === member.id ? m.color + 'cc' : m.color + '1a';
     })
-    .attr('stroke', function(d) {
+    .attr('stroke', function (d) {
       const name = normName(d.properties.name || d.properties.NAME_1 || '');
-      const m    = ESTADO_MEMBER[name];
+      const m = ESTADO_MEMBER[name];
       return (m && m.id === member.id) ? m.color : 'rgba(255,255,255,0.08)';
     })
-    .attr('stroke-width', function(d) {
+    .attr('stroke-width', function (d) {
       const name = normName(d.properties.name || d.properties.NAME_1 || '');
-      const m    = ESTADO_MEMBER[name];
+      const m = ESTADO_MEMBER[name];
       return (m && m.id === member.id) ? 1.5 : 0.5;
     });
 }
@@ -298,7 +298,7 @@ function clearStateMarkers() {
   mapPaths
     .transition().duration(220)
     .attr('fill', d => {
-      const name   = normName(d.properties.name || d.properties.NAME_1 || '');
+      const name = normName(d.properties.name || d.properties.NAME_1 || '');
       const member = ESTADO_MEMBER[name];
       return member ? member.color + '45' : 'rgba(255,255,255,0.06)';
     })
@@ -310,8 +310,8 @@ function clearStateMarkers() {
 function getInitials(nombre) {
   return nombre.split(' ')
     .filter(w => w.length > 1)
-    .map(w => w[0].toUpperCase())
     .slice(0, 2)
+    .map(w => w[0].toUpperCase())
     .join('');
 }
 
@@ -322,8 +322,13 @@ function renderTeamSection() {
 
   section.innerHTML = `
     <div class="team-header">
-      <div class="team-badge">
-        <svg viewBox="0 0 24 24" fill="none" width="16" height="16" style="margin-right:6px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="team-header-badge">
+        <svg viewBox="0 0 20 20" fill="none" width="14" height="14">
+          <path d="M10 2a8 8 0 1 0 0 16A8 8 0 0 0 10 2z" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M6.5 10.5c.9.9 2.1 1.5 3.5 1.5s2.6-.6 3.5-1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="7.5" cy="8" r="1" fill="currentColor"/>
+          <circle cx="12.5" cy="8" r="1" fill="currentColor"/>
+        </svg>
         Contacta Ahora, con un Click!
       </div>
       <h2 class="team-title">Equipo Richmond Pro <span class="team-heart">💙</span> México</h2>
@@ -357,9 +362,9 @@ function renderTeamSection() {
 
     <div class="team-grid">
       ${TEAM.map(m => {
-        const waText  = encodeURIComponent(`Hola ${m.nombre}, te contacto desde el portal Richmond Pro 👋`);
-        const initials = getInitials(m.nombre);
-        return `
+    const waText = encodeURIComponent(`Hola ${m.nombre}, te contacto desde el portal Richmond Pro 👋`);
+    const initials = getInitials(m.nombre);
+    return `
         <div class="team-card" data-id="${m.id}" onclick="onCardClick('${m.id}')">
           <div class="team-card-accent" style="background:${m.color}"></div>
           <div class="team-card-avatar" style="border-color:${m.color}40; background: linear-gradient(135deg, ${m.color}22, ${m.color}44);">
@@ -381,16 +386,16 @@ function renderTeamSection() {
             WA
           </a>
         </div>`;
-      }).join('')}
+  }).join('')}
     </div>
 
     <div class="managers-section">
       <div class="managers-label">Gerencia Richmond Pro México</div>
       <div class="managers-row">
         ${MANAGERS.map(m => {
-          const waText  = encodeURIComponent(`Hola ${m.nombre}, te contacto desde el portal Richmond Pro 👋`);
-          const initials = getInitials(m.nombre);
-          return `
+    const waText = encodeURIComponent(`Hola ${m.nombre}, te contacto desde el portal Richmond Pro 👋`);
+    const initials = getInitials(m.nombre);
+    return `
           <a class="manager-card ${m.highlight ? 'manager-highlight' : ''}"
             href="https://wa.me/${m.wa}?text=${waText}"
             target="_blank" rel="noopener noreferrer">
@@ -406,7 +411,7 @@ function renderTeamSection() {
               WhatsApp
             </div>
           </a>`;
-        }).join('')}
+  }).join('')}
       </div>
     </div>
   `;
@@ -436,7 +441,11 @@ function clearHighlight() {
   document.querySelectorAll('.team-card').forEach(c => c.classList.remove('highlighted'));
 }
 
-window.TEAM        = TEAM;
+window.TEAM = TEAM;
 window.onCardClick = onCardClick;
 
-document.addEventListener('DOMContentLoaded', renderTeamSection);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', renderTeamSection);
+} else {
+  renderTeamSection();
+}
