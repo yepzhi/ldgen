@@ -161,7 +161,7 @@ function initTeamMap() {
     attributionControl: false,
     minZoom: 4,
     maxZoom: 9
-  });
+  }).setView([23.5, -102.5], 5); // Fixed deterministic center and zoom like Neosys
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
     subdomains: 'abcd',
@@ -183,20 +183,13 @@ function initTeamMap() {
     baseMarkers.push(marker);
   });
 
-  let initialized = false;
-
-  const ro = new ResizeObserver(() => {
-    if (!teamMap) return;
-    teamMap.invalidateSize({ pan: false });
-    if (!initialized) {
+  // Simple delayed invalidation to ensure CSS layouts have settled
+  setTimeout(() => {
+    if (teamMap) {
+      teamMap.invalidateSize();
       teamMap.fitBounds(MX_BOUNDS, { padding: [16, 16], animate: false });
-      initialized = true;
-      // Optional: apply maxBounds after initial render
-      setTimeout(() => teamMap.setMaxBounds(MX_BOUNDS.pad(0.2)), 500);
     }
-  });
-  
-  ro.observe(el);
+  }, 300);
 
   window.addEventListener('resize', () => {
     if (!teamMap) return;
