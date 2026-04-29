@@ -332,7 +332,7 @@ function renderTeamSection() {
         Contacta Ahora, con un Click!
       </div>
       <h2 class="team-title">Equipo Richmond Pro <span class="team-heart">💙</span> México</h2>
-      <p class="team-sub">Toca sobre un estado del mapa o una tarjeta para ver tu contacto</p>
+      <p class="team-sub">Toca sobre un nombre o tarjeta para contactar ahora.</p>
       <div class="team-socials">
         <a href="https://www.instagram.com/richmondproglobal/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="team-social-link">
           <svg viewBox="0 0 24 24" fill="none" width="28" height="28"><rect x="2" y="2" width="20" height="20" rx="6" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor"/></svg>
