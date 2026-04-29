@@ -108,7 +108,7 @@ const TEAM = [
 
 const MANAGERS = [
   { nombre: 'Michelle Gutiérrez', rol: 'Gerente México Sur', wa: '5215532239128', foto: 'assets/michelle.jpg' },
-  { nombre: 'Marco Guerrero',     rol: 'Gerente Norte',      wa: '5215666689044', foto: 'assets/marco.png' },
+  { nombre: 'Marco Guerrero',     rol: 'Gerente México Norte', wa: '5215666689044', foto: 'assets/marco.png' },
   { nombre: 'Manuel Ramírez',     rol: 'Gerente Nacional',   wa: '5215539000043', highlight: true },
 ];
 
