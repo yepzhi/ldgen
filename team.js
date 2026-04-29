@@ -47,14 +47,14 @@ const TEAM = [
   },
   {
     id: 'puebla',
-    zona: 'Zona Puebla',
-    zonaShort: 'Puebla',
+    zona: 'Zona Puebla / Veracruz',
+    zonaShort: 'Puebla / Veracruz',
     nombre: 'Joel Navor',
     rol: 'Asesor',
     wa: '526641234571',
-    estados: ['Puebla', 'Tlaxcala', 'Morelos', 'Guerrero'],
+    estados: ['Puebla', 'Tlaxcala', 'Morelos', 'Guerrero', 'Veracruz'],
     color: '#fb923c',
-    lat: 18.2, lng: -98.0
+    lat: 18.8, lng: -96.5
   },
   {
     id: 'toluca',
@@ -81,13 +81,13 @@ const TEAM = [
   {
     id: 'cdmx2',
     zona: 'Zona CDMX',
-    zonaShort: 'Veracruz',
+    zonaShort: 'CDMX',
     nombre: 'Daniel Morales',
     rol: 'Asesor',
     wa: '526641234574',
-    estados: ['Veracruz'],
+    estados: ['Ciudad de México'],
     color: '#818cf8',
-    lat: 19.5, lng: -96.5
+    lat: 19.35, lng: -99.2
   },
 ];
 
