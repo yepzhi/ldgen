@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
 
@@ -283,12 +284,17 @@
 
     </div><!-- /glass-card -->
 
+    <!-- ── TEAM DIRECTORY + MAP ──────────────────── -->
+    <section id="team-section" class="team-section-outer"></section>
+
     <footer class="portal-footer">
       © 2026 Richmond Pro · Todos los derechos reservados
     </footer>
 
   </main>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script type="module" src="app.js"></script>
+  <script src="team.js"></script>
 </body>
 </html>
