@@ -6,98 +6,148 @@ const TEAM = [
     zona: 'Zona Noroeste',
     zonaShort: 'Noroeste',
     nombre: 'Alberto Yépiz',
-    rol: 'Asesor',
-    wa: '526641234567',
+    rol: 'Asesor Académico',
+    wa: '5216621147374',
+    foto: 'assets/yepiz.png',
     estados: ['Baja California', 'Baja California Sur', 'Sonora', 'Sinaloa', 'Nayarit'],
     color: '#4f8ef7',
     lat: 29.5, lng: -113.0
   },
   {
-    id: 'norte',
-    zona: 'Zona Norte',
-    zonaShort: 'Norte',
-    nombre: 'Luis Franco',
-    rol: 'Asesor',
-    wa: '526641234568',
-    estados: ['Chihuahua', 'Durango', 'Coahuila', 'Nuevo León', 'Tamaulipas', 'Zacatecas'],
-    color: '#a78bfa',
-    lat: 26.5, lng: -101.5
-  },
-  {
     id: 'occidente',
     zona: 'Zona Occidente',
     zonaShort: 'Occidente',
-    nombre: 'Fabiola Martinez',
-    rol: 'Asesora',
-    wa: '526641234569',
+    nombre: 'Fabiola',
+    rol: 'Asesora Académica',
+    wa: '5213316025928',
     estados: ['Jalisco', 'Colima', 'Michoacán', 'Aguascalientes', 'Guanajuato'],
     color: '#f472b6',
     lat: 20.5, lng: -103.2
   },
   {
-    id: 'sureste',
-    zona: 'Zona Sureste',
-    zonaShort: 'Sureste',
-    nombre: 'Arturo Mendoza',
-    rol: 'Asesor',
-    wa: '526641234570',
-    estados: ['Oaxaca', 'Chiapas', 'Tabasco', 'Campeche', 'Yucatán', 'Quintana Roo'],
-    color: '#34d399',
-    lat: 18.0, lng: -90.5
+    id: 'cdmx1',
+    zona: 'Zona CDMX',
+    zonaShort: 'CDMX',
+    nombre: 'Marco G.',
+    rol: 'Asesor Académico',
+    wa: '5215666689044',
+    foto: 'assets/marco.png',
+    estados: ['Ciudad de México'],
+    color: '#60a5fa',
+    lat: 19.53, lng: -99.03
+  },
+  {
+    id: 'cdmx2',
+    zona: 'Zona CDMX Sur',
+    zonaShort: 'CDMX Sur',
+    nombre: 'Yanser Rebollo',
+    rol: 'Asesor Académico',
+    wa: '5215666689003',
+    foto: 'assets/yanser2.png',
+    estados: ['Ciudad de México'],
+    color: '#a78bfa',
+    lat: 19.33, lng: -99.25
+  },
+  {
+    id: 'cdmx3',
+    zona: 'Zona CDMX',
+    zonaShort: 'CDMX',
+    nombre: 'Michelle G.',
+    rol: 'Asesora Académica',
+    wa: '5215532239128',
+    foto: 'assets/michelle.jpg',
+    estados: ['Ciudad de México'],
+    color: '#e879f9',
+    lat: 19.43, lng: -99.13
+  },
+  {
+    id: 'cdmx4',
+    zona: 'Zona CDMX',
+    zonaShort: 'CDMX',
+    nombre: 'Daniel M.',
+    rol: 'Asesor Académico',
+    wa: '5215537339631',
+    estados: ['Ciudad de México'],
+    color: '#818cf8',
+    lat: 19.38, lng: -99.18
+  },
+  {
+    id: 'cdmx5',
+    zona: 'Zona CDMX',
+    zonaShort: 'CDMX',
+    nombre: 'Arturo M.',
+    rol: 'Asesor Académico',
+    wa: '5215537339886',
+    foto: 'assets/arturo.jpg',
+    estados: ['Ciudad de México'],
+    color: '#38bdf8',
+    lat: 19.48, lng: -99.08
+  },
+  {
+    id: 'querétaro',
+    zona: 'Zona Centro',
+    zonaShort: 'Centro',
+    nombre: 'Marcel Vargas',
+    rol: 'Asesora Académica',
+    wa: '5214423384426',
+    estados: ['Querétaro', 'Hidalgo', 'San Luis Potosí'],
+    color: '#fb923c',
+    lat: 20.6, lng: -100.4
   },
   {
     id: 'puebla',
     zona: 'Zona Puebla / Veracruz',
     zonaShort: 'Puebla / Veracruz',
-    nombre: 'Joel Navor',
-    rol: 'Asesor',
-    wa: '526641234571',
+    nombre: 'Joel N.',
+    rol: 'Asesor Académico',
+    wa: '522211057576',
     estados: ['Puebla', 'Tlaxcala', 'Morelos', 'Guerrero', 'Veracruz'],
-    color: '#fb923c',
+    color: '#f4c94e',
     lat: 18.8, lng: -96.5
   },
   {
-    id: 'toluca',
-    zona: 'Zona Toluca / CDMX',
-    zonaShort: 'Toluca / CDMX',
-    nombre: 'Edgar Espinoza',
-    rol: 'Asesor',
-    wa: '526641234572',
-    estados: ['Estado de México', 'Hidalgo', 'Querétaro', 'San Luis Potosí'],
-    color: '#f4c94e',
-    lat: 20.0, lng: -99.6
+    id: 'norte',
+    zona: 'Zona Norte',
+    zonaShort: 'Norte',
+    nombre: 'Luis F.',
+    rol: 'Asesor Académico',
+    wa: '5218119905772',
+    foto: 'assets/luis.jpg',
+    estados: ['Nuevo León', 'Tamaulipas', 'Coahuila', 'Chihuahua', 'Durango', 'Zacatecas'],
+    color: '#34d399',
+    lat: 25.7, lng: -100.3
   },
   {
-    id: 'cdmx1',
-    zona: 'Zona CDMX',
-    zonaShort: 'CDMX',
-    nombre: 'Miguel Campero',
-    rol: 'Asesor',
-    wa: '526641234573',
-    estados: ['Ciudad de México'],
-    color: '#60a5fa',
-    lat: 19.43, lng: -99.13
+    id: 'monterrey2',
+    zona: 'Zona Monterrey',
+    zonaShort: 'Monterrey',
+    nombre: 'Miguel C.',
+    rol: 'Asesor Académico',
+    wa: '5218116318251',
+    estados: ['Nuevo León'],
+    color: '#2dd4bf',
+    lat: 25.5, lng: -100.0
   },
   {
-    id: 'cdmx2',
-    zona: 'Zona CDMX',
-    zonaShort: 'CDMX',
-    nombre: 'Daniel Morales',
-    rol: 'Asesor',
-    wa: '526641234574',
-    estados: ['Ciudad de México'],
-    color: '#818cf8',
-    lat: 19.35, lng: -99.2
+    id: 'sureste',
+    zona: 'Zona Sureste',
+    zonaShort: 'Sureste',
+    nombre: 'Asesor Sureste',
+    rol: 'Asesor Académico',
+    wa: '526641234570',
+    estados: ['Oaxaca', 'Chiapas', 'Tabasco', 'Campeche', 'Yucatán', 'Quintana Roo'],
+    color: '#a3e635',
+    lat: 18.0, lng: -90.5
   },
 ];
 
 const MANAGERS = [
-  { nombre: 'Michelle Gutiérrez', rol: 'Gerente México Sur',   wa: '526641234580' },
-  { nombre: 'Marco Guerrero',     rol: 'Gerente Norte',        wa: '526641234581' },
-  { nombre: 'Manuel Ramírez',     rol: 'Gerente Nacional',     wa: '526641234582', highlight: true },
+  { nombre: 'Michelle G.',   rol: 'Asesora Académica CDMX',   wa: '5215532239128', foto: 'assets/michelle.jpg' },
+  { nombre: 'Marco G.',      rol: 'Gerente Norte',             wa: '5215666689044', foto: 'assets/marco.png' },
+  { nombre: 'Manuel R.',     rol: 'Gerente Nacional',          wa: '5215539000043', highlight: true },
 ];
 
-// Coordenadas por estado para colocar puntos en el mapa
+// Coordenadas por estado
 const STATE_CENTERS = {
   'Aguascalientes':     [21.88, -102.29],
   'Baja California':    [31.0,  -115.5],
@@ -135,22 +185,24 @@ const STATE_CENTERS = {
 
 // ─── Leaflet Map ──────────────────────────────────
 let teamMap = null;
-let baseMarkers  = [];   // always-visible zone dots
-let activeMarkers = [];  // state highlight markers on click
+let baseMarkers  = [];
+let activeMarkers = [];
+
+// Mexico bounding box: SW [13.5, -120.0] → NE [33.5, -85.5]
+const MX_BOUNDS = L.latLngBounds([[13.5, -120.0], [33.5, -85.5]]);
 
 function initTeamMap() {
   const el = document.getElementById('team-map');
   if (!el || teamMap) return;
-
-  // Mexico bounding box: SW [14.5, -118.5] → NE [32.8, -86.5]
-  const MX_BOUNDS = [[14.5, -118.5], [32.8, -86.5]];
 
   teamMap = L.map('team-map', {
     zoomControl: false,
     scrollWheelZoom: false,
     attributionControl: false,
     minZoom: 4,
-    maxZoom: 9
+    maxZoom: 9,
+    maxBounds: MX_BOUNDS,
+    maxBoundsViscosity: 1.0   // ← hard wall, mapa NO escapa del rectángulo
   });
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
@@ -173,17 +225,22 @@ function initTeamMap() {
     baseMarkers.push(marker);
   });
 
-  // Show full Mexico on load, then fix tile seams
-  function fix() {
+  function fixAndFit() {
     teamMap.invalidateSize({ pan: false });
-    teamMap.fitBounds(MX_BOUNDS, { padding: [12, 12], animate: false });
+    teamMap.fitBounds(MX_BOUNDS, { padding: [16, 16], animate: false });
   }
-  setTimeout(fix, 80);
-  setTimeout(fix, 350);
+  setTimeout(fixAndFit, 80);
+  setTimeout(fixAndFit, 400);
 
-  window.addEventListener('resize', () => teamMap && teamMap.invalidateSize({ pan: false }));
+  window.addEventListener('resize', () => {
+    if (!teamMap) return;
+    teamMap.invalidateSize({ pan: false });
+    // Re-snap to bounds if user had panned off edge
+    if (!MX_BOUNDS.contains(teamMap.getCenter())) {
+      teamMap.panInsideBounds(MX_BOUNDS, { animate: true });
+    }
+  });
 }
-
 
 function buildPopupHTML(member, stateName) {
   const waText = encodeURIComponent(`Hola ${member.nombre}, te contacto desde el portal Richmond Pro 👋`);
@@ -201,7 +258,6 @@ function buildPopupHTML(member, stateName) {
 
 // Show colored state circles when a card/marker is clicked
 function showStateMarkers(member) {
-  // Remove previous
   activeMarkers.forEach(m => teamMap.removeLayer(m));
   activeMarkers = [];
 
@@ -223,10 +279,15 @@ function showStateMarkers(member) {
     activeMarkers.push(m);
   });
 
-  // Fit map to show all state markers
+  // Fit to state markers but NEVER exceed MX_BOUNDS
   if (activeMarkers.length > 0) {
     const group = L.featureGroup(activeMarkers);
-    teamMap.flyToBounds(group.getBounds().pad(0.3), { duration: 0.8, maxZoom: 7 });
+    const targetBounds = group.getBounds().pad(0.3);
+    // Clamp to MX_BOUNDS
+    const safe = MX_BOUNDS.intersects(targetBounds)
+      ? targetBounds
+      : MX_BOUNDS;
+    teamMap.flyToBounds(safe, { duration: 0.7, maxZoom: 7 });
   }
 }
 
@@ -242,6 +303,15 @@ function highlightCard(id) {
 }
 function clearHighlight() {
   document.querySelectorAll('.team-card').forEach(c => c.classList.remove('highlighted'));
+}
+
+// ─── Helpers ──────────────────────────────────────
+function getInitials(nombre) {
+  return nombre.split(' ')
+    .filter(w => w.length > 1)
+    .slice(0, 2)
+    .map(w => w[0].toUpperCase())
+    .join('');
 }
 
 // ─── Render Directory ─────────────────────────────
@@ -292,28 +362,27 @@ function renderTeamSection() {
     <div class="team-grid">
       ${TEAM.map(m => {
         const waText = encodeURIComponent(`Hola ${m.nombre}, te contacto desde el portal Richmond Pro 👋`);
+        const initials = getInitials(m.nombre);
         return `
         <div class="team-card" data-id="${m.id}" onclick="onCardClick('${m.id}')">
           <div class="team-card-accent" style="background:${m.color}"></div>
-          <div class="team-card-avatar" style="border-color:${m.color}; background:${m.color}22;">
-            <svg viewBox="0 0 40 40" fill="none" width="26" height="26">
-              <circle cx="20" cy="14" r="7" stroke="${m.color}" stroke-width="1.8"/>
-              <path d="M8 36c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="${m.color}" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
+          <div class="team-card-avatar" style="border-color:${m.color}40; background: linear-gradient(135deg, ${m.color}22, ${m.color}44);">
+            ${m.foto ? `<img src="${m.foto}" alt="${m.nombre}" loading="lazy"/>` : `<span class="team-card-initial" style="color:${m.color}">${initials}</span>`}
           </div>
           <div class="team-card-info">
             <div class="team-card-zona" style="color:${m.color}">${m.zonaShort}</div>
             <div class="team-card-name">${m.nombre}</div>
+            <div class="team-card-rol">${m.rol}</div>
           </div>
           <a
             class="team-card-wa"
             href="https://wa.me/${m.wa}?text=${waText}"
             target="_blank" rel="noopener noreferrer"
             onclick="event.stopPropagation()"
-            style="background:${m.color}22; border-color:${m.color}55; color:${m.color}"
+            style="background:${m.color}18; border-color:${m.color}50; color:${m.color}"
           >
             <svg viewBox="0 0 20 20" fill="none" width="14" height="14"><path d="M14 12.5c-.5-.25-2-.98-2.3-1.08-.3-.1-.52-.15-.74.15-.22.3-.85 1.08-1.04 1.3-.19.22-.38.25-.7.08-.32-.17-1.35-.5-2.57-1.58-.95-.84-1.59-1.88-1.77-2.2-.19-.32-.02-.49.14-.65.14-.14.32-.38.48-.57.16-.19.21-.32.32-.54.1-.22.05-.41-.02-.57C5.68 7.16 5.05 5.5 4.8 4.92c-.25-.57-.5-.5-.7-.5-.18 0-.4-.02-.61-.02-.22 0-.57.08-.87.41C2.32 5.14 1.5 5.9 1.5 7.5s1.06 3.18 1.21 3.4c.15.22 2.1 3.2 5.08 4.49 4.5 1.94 4.5 1.29 5.31 1.21.81-.08 2.61-1.07 2.98-2.1.37-1.03.37-1.92.26-2.1-.11-.18-.3-.27-.81-.52z" fill="currentColor"/></svg>
-            WhatsApp
+            WA
           </a>
         </div>`;
       }).join('')}
@@ -324,14 +393,13 @@ function renderTeamSection() {
       <div class="managers-row">
         ${MANAGERS.map(m => {
           const waText = encodeURIComponent(`Hola ${m.nombre}, te contacto desde el portal Richmond Pro 👋`);
+          const initials = getInitials(m.nombre);
           return `
           <a class="manager-card ${m.highlight ? 'manager-highlight' : ''}"
             href="https://wa.me/${m.wa}?text=${waText}"
             target="_blank" rel="noopener noreferrer">
             <div class="manager-avatar">
-              <svg viewBox="0 0 40 40" fill="none" width="20" height="20">
-                <polygon points="20,4 24,14 35,14 26,21 29,32 20,25 11,32 14,21 5,14 16,14" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
-              </svg>
+              ${m.foto ? `<img src="${m.foto}" alt="${m.nombre}" loading="lazy"/>` : `<span class="manager-initial">${initials}</span>`}
             </div>
             <div>
               <div class="manager-name">${m.nombre}</div>
@@ -367,7 +435,7 @@ function onCardClick(id) {
   }
 }
 
-window.TEAM         = TEAM;
-window.onCardClick  = onCardClick;
+window.TEAM        = TEAM;
+window.onCardClick = onCardClick;
 
 document.addEventListener('DOMContentLoaded', renderTeamSection);
