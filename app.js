@@ -171,7 +171,11 @@ function validateStep3() {
   submitLead();
 }
 
-// ─── Submit → Firestore ───────────────────────────
+// ─── Google Sheets Webhook ────────────────────────
+// Pega aquí la URL de tu despliegue de Apps Script:
+const WEBHOOK_URL = 'REPLACE_WITH_APPS_SCRIPT_URL';
+
+// ─── Submit → Firestore + Sheets ──────────────────
 async function submitLead() {
   const submitBtn = document.querySelector('#step-3 .btn-primary');
   submitBtn.disabled = true;
@@ -187,6 +191,17 @@ async function submitLead() {
   try {
     const docRef = await addDoc(collection(db, 'leads'), payload);
     console.log('[RichmondPro] Lead saved:', docRef.id);
+
+    // Send to Google Sheets (fire & forget, no-cors)
+    if (WEBHOOK_URL && !WEBHOOK_URL.startsWith('REPLACE')) {
+      fetch(WEBHOOK_URL, {
+        method:  'POST',
+        mode:    'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ ...STATE.data, intention: STATE.intention, firestoreId: docRef.id })
+      }).catch(err => console.warn('[Sheets] Webhook error:', err));
+    }
+
     buildSummary(payload);
     goStep(4);
   } catch (err) {
@@ -196,6 +211,7 @@ async function submitLead() {
     submitBtn.innerHTML = 'Enviar <svg class="btn-svg" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   }
 }
+
 
 // ─── Summary card ────────────────────────────────
 function buildSummary(payload) {
