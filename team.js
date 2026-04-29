@@ -142,65 +142,48 @@ function initTeamMap() {
   const el = document.getElementById('team-map');
   if (!el || teamMap) return;
 
-  // Force explicit pixel dimensions BEFORE Leaflet touches the container
-  const isMobile = window.innerWidth < 700;
-  el.style.height = isMobile ? '260px' : '380px';
-  el.style.width  = '100%';
+  // Mexico bounding box: SW [14.5, -118.5] → NE [32.8, -86.5]
+  const MX_BOUNDS = [[14.5, -118.5], [32.8, -86.5]];
 
   teamMap = L.map('team-map', {
     zoomControl: false,
     scrollWheelZoom: false,
     attributionControl: false,
     minZoom: 4,
-    maxZoom: 9,
-    preferCanvas: true,           // avoids SVG glitches
-    renderer: L.canvas()
-  }).setView([23.6, -102.5], 5);
+    maxZoom: 9
+  });
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
     subdomains: 'abcd',
-    maxZoom: 9,
-    updateWhenIdle: false,
-    updateWhenZooming: true
+    maxZoom: 9
   }).addTo(teamMap);
 
-  // Place markers
+  // Place zone markers
   TEAM.forEach(member => {
     const icon = L.divIcon({
-      html: `<div class="map-state-dot" style="background:${member.color}; box-shadow:0 0 12px ${member.color}99; width:14px; height:14px;"></div>`,
+      html: `<div class="map-state-dot" style="background:${member.color};box-shadow:0 0 10px ${member.color}99;width:13px;height:13px;"></div>`,
       className: '',
-      iconSize: [14, 14],
-      iconAnchor: [7, 7]
+      iconSize: [13, 13],
+      iconAnchor: [6, 6]
     });
-
     const marker = L.marker([member.lat, member.lng], { icon })
       .addTo(teamMap)
       .bindPopup(buildPopupHTML(member, member.zona), { className: 'rp-popup', maxWidth: 220 });
-
-    marker.on('click', () => {
-      highlightCard(member.id);
-      showStateMarkers(member);
-    });
+    marker.on('click', () => { highlightCard(member.id); showStateMarkers(member); });
     baseMarkers.push(marker);
   });
 
-  // Fix tile rendering: invalidateSize then re-center (critical for glass containers)
-  function fixSize() {
+  // Show full Mexico on load, then fix tile seams
+  function fix() {
     teamMap.invalidateSize({ pan: false });
-    teamMap.setView([23.6, -102.5], 5, { animate: false });
+    teamMap.fitBounds(MX_BOUNDS, { padding: [12, 12], animate: false });
   }
+  setTimeout(fix, 80);
+  setTimeout(fix, 350);
 
-  setTimeout(fixSize, 50);
-  setTimeout(fixSize, 250);
-  setTimeout(fixSize, 600);
-
-  // Also fix on window resize
-  window.addEventListener('resize', () => {
-    if (teamMap) {
-      teamMap.invalidateSize({ pan: false });
-    }
-  });
+  window.addEventListener('resize', () => teamMap && teamMap.invalidateSize({ pan: false }));
 }
+
 
 function buildPopupHTML(member, stateName) {
   const waText = encodeURIComponent(`Hola ${member.nombre}, te contacto desde el portal Richmond Pro 👋`);
