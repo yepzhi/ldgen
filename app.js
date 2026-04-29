@@ -22,10 +22,11 @@ const db  = getFirestore(app);
 
 // ─── State ───────────────────────────────────────
 const STATE = {
-  intention: 'contact',
-  instType:  'gobierno',
-  role:      null,
-  data:      {}
+  intention:   'contact',
+  instType:    'gobierno',
+  hasProvider: 'no',
+  role:        null,
+  data:        {}
 };
 
 // ─── Navigation ──────────────────────────────────
@@ -59,6 +60,21 @@ function selectChip(groupId, el) {
   el.classList.add('active');
   STATE.instType = el.dataset.val;
   clearError('err-instType');
+}
+
+// ─── Provider Yes/No Toggle ─────────────────────
+function selectProvider(val, el) {
+  STATE.hasProvider = val;
+  document.querySelectorAll('#providerToggle .yesno-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  const reveal = document.getElementById('providerReveal');
+  if (val === 'si') {
+    reveal.classList.add('open');
+  } else {
+    reveal.classList.remove('open');
+    const inp = document.getElementById('providerName');
+    if (inp) inp.value = '';
+  }
 }
 
 // ─── Role Select ─────────────────────────────────
@@ -110,9 +126,13 @@ function validateStep1() {
   if (!st)  { setError('err-state', 'Por favor selecciona tu estado.'); ok = false; }
   else      { clearError('err-state'); }
   if (ok) {
-    STATE.data.university = uni;
-    STATE.data.instType   = STATE.instType;
-    STATE.data.state      = st;
+    STATE.data.university   = uni;
+    STATE.data.instType     = STATE.instType;
+    STATE.data.state        = st;
+    STATE.data.hasProvider  = STATE.hasProvider;
+    if (STATE.hasProvider === 'si') {
+      STATE.data.providerName = document.getElementById('providerName').value.trim();
+    }
     goStep(2);
   }
 }
@@ -207,10 +227,15 @@ function buildSummary(payload) {
 // ─── Restart ─────────────────────────────────────
 function restartForm() {
   Object.assign(STATE, { intention: 'contact', instType: 'gobierno', role: null, data: {} });
-  ['university','firstName','lastName','email','whatsapp','otroComment'].forEach(id => {
+  ['university','firstName','lastName','email','whatsapp','otroComment','providerName'].forEach(id => {
     const el = document.getElementById(id); if (el) el.value = '';
   });
   document.getElementById('state').value = '';
+  // Reset provider toggle
+  STATE.hasProvider = 'no';
+  document.querySelectorAll('#providerToggle .yesno-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
+  const reveal = document.getElementById('providerReveal');
+  if (reveal) reveal.classList.remove('open');
   document.querySelectorAll('.chip').forEach((c, i) => c.classList.toggle('active', i === 0));
   document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
   document.getElementById('otroWrap').style.display = 'none';
@@ -239,6 +264,7 @@ window.goStep          = goStep;
 window.selectIntention = selectIntention;
 window.selectChip      = selectChip;
 window.selectRole      = selectRole;
+window.selectProvider  = selectProvider;
 window.validateStep1   = validateStep1;
 window.validateStep2   = validateStep2;
 window.validateStep3   = validateStep3;

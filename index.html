@@ -116,6 +116,31 @@
           <span class="field-error" id="err-state"></span>
         </div>
 
+        <!-- ¿Ya trabajan con proveedor? -->
+        <div class="form-group">
+          <label class="form-label">¿Tu institución ya trabaja con algún proveedor de inglés?</label>
+          <div class="toggle-yesno" id="providerToggle">
+            <button class="yesno-btn active" data-val="no" onclick="selectProvider('no', this)">
+              <svg viewBox="0 0 20 20" fill="none" width="15" height="15">
+                <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              No
+            </button>
+            <button class="yesno-btn" data-val="si" onclick="selectProvider('si', this)">
+              <svg viewBox="0 0 20 20" fill="none" width="15" height="15">
+                <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Sí
+            </button>
+          </div>
+          <div class="provider-reveal" id="providerReveal">
+            <input id="providerName" type="text" class="form-input"
+              placeholder="¿Cuál proveedor utilizan actualmente?" />
+          </div>
+        </div>
+
         <div class="btn-row">
           <button class="btn-ghost" onclick="goStep(0, true)">
             <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><path d="M16 10H4M8 14l-4-4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
