@@ -376,14 +376,14 @@ function renderTeamSection() {
             ${m.rol ? `<div class="team-card-rol">${m.rol}</div>` : ''}
           </div>
           <a
-            class="team-card-wa"
+            class="manager-wa-btn"
             href="https://wa.me/${m.wa}?text=${waText}"
             target="_blank" rel="noopener noreferrer"
             onclick="event.stopPropagation()"
-            style="background:${m.color}18; border-color:${m.color}50; color:${m.color}"
+            style="text-decoration:none;"
           >
             <svg viewBox="0 0 20 20" fill="none" width="14" height="14"><path d="M14 12.5c-.5-.25-2-.98-2.3-1.08-.3-.1-.52-.15-.74.15-.22.3-.85 1.08-1.04 1.3-.19.22-.38.25-.7.08-.32-.17-1.35-.5-2.57-1.58-.95-.84-1.59-1.88-1.77-2.2-.19-.32-.02-.49.14-.65.14-.14.32-.38.48-.57.16-.19.21-.32.32-.54.1-.22.05-.41-.02-.57C5.68 7.16 5.05 5.5 4.8 4.92c-.25-.57-.5-.5-.7-.5-.18 0-.4-.02-.61-.02-.22 0-.57.08-.87.41C2.32 5.14 1.5 5.9 1.5 7.5s1.06 3.18 1.21 3.4c.15.22 2.1 3.2 5.08 4.49 4.5 1.94 4.5 1.29 5.31 1.21.81-.08 2.61-1.07 2.98-2.1.37-1.03.37-1.92.26-2.1-.11-.18-.3-.27-.81-.52z" fill="currentColor"/></svg>
-            WA
+            WhatsApp
           </a>
         </div>`;
   }).join('')}
