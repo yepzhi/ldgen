@@ -14,10 +14,22 @@ const TEAM = [
     lat: 29.5, lng: -113.0
   },
   {
+    id: 'norte',
+    zona: 'Zona Norte',
+    zonaShort: 'Norte',
+    nombre: 'Luis Franco',
+    rol: 'Asesor Académico',
+    wa: '5218119905772',
+    foto: 'assets/luis.jpg',
+    estados: ['Chihuahua', 'Durango', 'Coahuila', 'Nuevo León', 'Tamaulipas', 'Zacatecas'],
+    color: '#a78bfa',
+    lat: 26.5, lng: -101.5
+  },
+  {
     id: 'occidente',
     zona: 'Zona Occidente',
     zonaShort: 'Occidente',
-    nombre: 'Fabiola',
+    nombre: 'Fabiola Martinez',
     rol: 'Asesora Académica',
     wa: '5213316025928',
     estados: ['Jalisco', 'Colima', 'Michoacán', 'Aguascalientes', 'Guanajuato'],
@@ -25,46 +37,55 @@ const TEAM = [
     lat: 20.5, lng: -103.2
   },
   {
+    id: 'sureste',
+    zona: 'Zona Sureste',
+    zonaShort: 'Sureste',
+    nombre: 'Arturo Mendoza',
+    rol: 'Asesor Académico',
+    wa: '5215537339886',
+    foto: 'assets/arturo.jpg',
+    estados: ['Oaxaca', 'Chiapas', 'Tabasco', 'Campeche', 'Yucatán', 'Quintana Roo'],
+    color: '#34d399',
+    lat: 18.0, lng: -90.5
+  },
+  {
+    id: 'puebla',
+    zona: 'Zona Puebla / Veracruz',
+    zonaShort: 'Puebla / Veracruz',
+    nombre: 'Joel Navor',
+    rol: 'Asesor Académico',
+    wa: '522211057576',
+    estados: ['Puebla', 'Tlaxcala', 'Morelos', 'Guerrero', 'Veracruz'],
+    color: '#fb923c',
+    lat: 18.8, lng: -96.5
+  },
+  {
+    id: 'toluca',
+    zona: 'Zona Toluca / CDMX',
+    zonaShort: 'Toluca / CDMX',
+    nombre: 'Edgar Espinoza',
+    rol: 'Asesor Académico',
+    wa: '526641234572',
+    estados: ['Estado de México', 'Hidalgo', 'Querétaro', 'San Luis Potosí'],
+    color: '#f4c94e',
+    lat: 20.0, lng: -99.6
+  },
+  {
     id: 'cdmx1',
     zona: 'Zona CDMX',
     zonaShort: 'CDMX',
-    nombre: 'Marco G.',
+    nombre: 'Miguel Campero',
     rol: 'Asesor Académico',
-    wa: '5215666689044',
-    foto: 'assets/marco.png',
+    wa: '5218116318251',
     estados: ['Ciudad de México'],
     color: '#60a5fa',
-    lat: 19.53, lng: -99.03
-  },
-  {
-    id: 'cdmx2',
-    zona: 'Zona CDMX Sur',
-    zonaShort: 'CDMX Sur',
-    nombre: 'Yanser Rebollo',
-    rol: 'Asesor Académico',
-    wa: '5215666689003',
-    foto: 'assets/yanser2.png',
-    estados: ['Ciudad de México'],
-    color: '#a78bfa',
-    lat: 19.33, lng: -99.25
-  },
-  {
-    id: 'cdmx3',
-    zona: 'Zona CDMX',
-    zonaShort: 'CDMX',
-    nombre: 'Michelle G.',
-    rol: 'Asesora Académica',
-    wa: '5215532239128',
-    foto: 'assets/michelle.jpg',
-    estados: ['Ciudad de México'],
-    color: '#e879f9',
     lat: 19.43, lng: -99.13
   },
   {
-    id: 'cdmx4',
+    id: 'cdmx2',
     zona: 'Zona CDMX',
     zonaShort: 'CDMX',
-    nombre: 'Daniel M.',
+    nombre: 'Daniel Morales',
     rol: 'Asesor Académico',
     wa: '5215537339631',
     estados: ['Ciudad de México'],
@@ -72,79 +93,23 @@ const TEAM = [
     lat: 19.38, lng: -99.18
   },
   {
-    id: 'cdmx5',
+    id: 'cdmx3',
     zona: 'Zona CDMX',
     zonaShort: 'CDMX',
-    nombre: 'Arturo M.',
-    rol: 'Asesor Académico',
-    wa: '5215537339886',
-    foto: 'assets/arturo.jpg',
+    nombre: 'Yanser Rebollo',
+    rol: 'Asesor Académico Richmond Pro',
+    wa: '5215666689003',
+    foto: 'assets/yanser2.png',
     estados: ['Ciudad de México'],
-    color: '#38bdf8',
-    lat: 19.48, lng: -99.08
-  },
-  {
-    id: 'querétaro',
-    zona: 'Zona Centro',
-    zonaShort: 'Centro',
-    nombre: 'Marcel Vargas',
-    rol: 'Asesora Académica',
-    wa: '5214423384426',
-    estados: ['Querétaro', 'Hidalgo', 'San Luis Potosí'],
-    color: '#fb923c',
-    lat: 20.6, lng: -100.4
-  },
-  {
-    id: 'puebla',
-    zona: 'Zona Puebla / Veracruz',
-    zonaShort: 'Puebla / Veracruz',
-    nombre: 'Joel N.',
-    rol: 'Asesor Académico',
-    wa: '522211057576',
-    estados: ['Puebla', 'Tlaxcala', 'Morelos', 'Guerrero', 'Veracruz'],
-    color: '#f4c94e',
-    lat: 18.8, lng: -96.5
-  },
-  {
-    id: 'norte',
-    zona: 'Zona Norte',
-    zonaShort: 'Norte',
-    nombre: 'Luis F.',
-    rol: 'Asesor Académico',
-    wa: '5218119905772',
-    foto: 'assets/luis.jpg',
-    estados: ['Nuevo León', 'Tamaulipas', 'Coahuila', 'Chihuahua', 'Durango', 'Zacatecas'],
-    color: '#34d399',
-    lat: 25.7, lng: -100.3
-  },
-  {
-    id: 'monterrey2',
-    zona: 'Zona Monterrey',
-    zonaShort: 'Monterrey',
-    nombre: 'Miguel C.',
-    rol: 'Asesor Académico',
-    wa: '5218116318251',
-    estados: ['Nuevo León'],
-    color: '#2dd4bf',
-    lat: 25.5, lng: -100.0
-  },
-  {
-    id: 'sureste',
-    zona: 'Zona Sureste',
-    zonaShort: 'Sureste',
-    nombre: 'Asesor Sureste',
-    rol: 'Asesor Académico',
-    wa: '526641234570',
-    estados: ['Oaxaca', 'Chiapas', 'Tabasco', 'Campeche', 'Yucatán', 'Quintana Roo'],
-    color: '#a3e635',
-    lat: 18.0, lng: -90.5
-  },
+    color: '#e879f9',
+    lat: 19.33, lng: -99.25
+  }
 ];
 
 const MANAGERS = [
-  { nombre: 'Michelle G.',   rol: 'Asesora Académica CDMX',   wa: '5215532239128', foto: 'assets/michelle.jpg' },
-  { nombre: 'Marco G.',      rol: 'Gerente Norte',             wa: '5215666689044', foto: 'assets/marco.png' },
-  { nombre: 'Manuel R.',     rol: 'Gerente Nacional',          wa: '5215539000043', highlight: true },
+  { nombre: 'Michelle Gutiérrez', rol: 'Gerente México Sur', wa: '5215532239128', foto: 'assets/michelle.jpg' },
+  { nombre: 'Marco Guerrero',     rol: 'Gerente Norte',      wa: '5215666689044', foto: 'assets/marco.png' },
+  { nombre: 'Manuel Ramírez',     rol: 'Gerente Nacional',   wa: '5215539000043', highlight: true },
 ];
 
 // Coordenadas por estado
