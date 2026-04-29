@@ -7,18 +7,23 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAnalytics }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
 
 const firebaseConfig = {
-  apiKey:            "REPLACE_WITH_API_KEY",
-  authDomain:        "REPLACE_WITH_AUTH_DOMAIN",
-  projectId:         "REPLACE_WITH_PROJECT_ID",
-  storageBucket:     "REPLACE_WITH_STORAGE_BUCKET",
-  messagingSenderId: "REPLACE_WITH_SENDER_ID",
-  appId:             "REPLACE_WITH_APP_ID"
+  apiKey:            "AIzaSyCdszta7w3yg1zLeHDrPlo4Kln63K2Ftks",
+  authDomain:        "leadgen-ca3c9.firebaseapp.com",
+  projectId:         "leadgen-ca3c9",
+  storageBucket:     "leadgen-ca3c9.firebasestorage.app",
+  messagingSenderId: "436445053383",
+  appId:             "1:436445053383:web:e7c99ece8753f6a56d59e2",
+  measurementId:     "G-VGRW18M26G"
 };
 
-const app = initializeApp(firebaseConfig);
-const db  = getFirestore(app);
+const app       = initializeApp(firebaseConfig);
+const db        = getFirestore(app);
+const analytics = getAnalytics(app);
+
 
 // ─── State ───────────────────────────────────────
 const STATE = {
