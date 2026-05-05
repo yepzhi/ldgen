@@ -94,6 +94,27 @@
         </div>
 
         <div class="form-group">
+          <label for="subsistema" class="form-label">Subsistema <span class="req">*</span></label>
+          <div class="select-wrap">
+            <select id="subsistema" class="form-select" onchange="handleSubsistema(this.value)">
+              <option value="">Selecciona tu subsistema…</option>
+              <option value="UTyP">UTyP</option>
+              <option value="TecNM">TecNM</option>
+              <option value="Autónomas">Autónomas</option>
+              <option value="Estatales">Estatales</option>
+              <option value="Privada">Privada</option>
+              <option value="Otro">Otro</option>
+            </select>
+            <svg class="select-arrow-svg" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="field-error" id="err-subsistema"></span>
+          <div class="provider-reveal" id="subsistemaOtroReveal">
+            <input id="subsistemaOtro" type="text" class="form-input"
+              placeholder="Describe tu subsistema…" />
+          </div>
+        </div>
+
+        <div class="form-group">
           <label for="state" class="form-label">Estado donde vives <span class="req">*</span></label>
           <div class="select-wrap">
             <select id="state" class="form-select">
@@ -357,7 +378,7 @@
         </a>
       </div>
       © 2026 Richmond Pro · <a href="https://richmondpro.global/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">richmondpro.global</a><br>
-      <span style="opacity:0.4; font-size:0.65rem; margin-top:0.4rem; display:block;">v2.6</span>
+      <span style="opacity:0.4; font-size:0.65rem; margin-top:0.4rem; display:block;">v2.7</span>
     </footer>
 
   </main>

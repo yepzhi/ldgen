@@ -29,6 +29,7 @@ const analytics = getAnalytics(app);
 const STATE = {
   intention:   'contact',
   instType:    'gobierno',
+  subsistema:  '',
   hasProvider: 'no',
   role:        null,
   data:        {}
@@ -65,6 +66,20 @@ function selectChip(groupId, el) {
   el.classList.add('active');
   STATE.instType = el.dataset.val;
   clearError('err-instType');
+}
+
+// ─── Subsistema Handler ──────────────────────────
+function handleSubsistema(val) {
+  STATE.subsistema = val;
+  clearError('err-subsistema');
+  const reveal = document.getElementById('subsistemaOtroReveal');
+  if (val === 'Otro') {
+    reveal.classList.add('open');
+  } else {
+    reveal.classList.remove('open');
+    const inp = document.getElementById('subsistemaOtro');
+    if (inp) inp.value = '';
+  }
 }
 
 // ─── Provider Yes/No Toggle ─────────────────────
@@ -127,12 +142,19 @@ function validateStep1() {
   else       { clearError('err-university'); markInput('university', false); }
   if (!STATE.instType) { setError('err-instType', 'Selecciona el tipo de institución.'); ok = false; }
   else                 { clearError('err-instType'); }
+  const sub = document.getElementById('subsistema').value;
+  if (!sub) { setError('err-subsistema', 'Por favor selecciona el subsistema.'); ok = false; }
+  else      { clearError('err-subsistema'); }
   const st = document.getElementById('state').value;
   if (!st)  { setError('err-state', 'Por favor selecciona tu estado.'); ok = false; }
   else      { clearError('err-state'); }
   if (ok) {
     STATE.data.university   = uni;
     STATE.data.instType     = STATE.instType;
+    STATE.data.subsistema   = sub;
+    if (sub === 'Otro') {
+      STATE.data.subsistemaOtro = document.getElementById('subsistemaOtro').value.trim();
+    }
     STATE.data.state        = st;
     STATE.data.hasProvider  = STATE.hasProvider;
     if (STATE.hasProvider === 'si') {
@@ -220,6 +242,7 @@ function buildSummary(payload) {
     ['Nombre',      `${payload.firstName} ${payload.lastName}`],
     ['Correo',      payload.email],
     ['Universidad', payload.university],
+    ['Subsistema',  payload.subsistema + (payload.subsistemaOtro ? ` – ${payload.subsistemaOtro}` : '')],
     ['Institución', payload.instType === 'gobierno' ? 'Pública / Gobierno' : 'Privada'],
     ['Estado',      payload.state],
     ['Puesto',      payload.role + (payload.roleComment ? ` – ${payload.roleComment}` : '')],
@@ -247,11 +270,15 @@ function buildSummary(payload) {
 
 // ─── Restart ─────────────────────────────────────
 function restartForm() {
-  Object.assign(STATE, { intention: 'contact', instType: 'gobierno', role: null, data: {} });
-  ['university','firstName','lastName','email','whatsapp','otroComment','providerName'].forEach(id => {
+  Object.assign(STATE, { intention: 'contact', instType: 'gobierno', subsistema: '', role: null, data: {} });
+  ['university','firstName','lastName','email','whatsapp','otroComment','providerName','subsistemaOtro'].forEach(id => {
     const el = document.getElementById(id); if (el) el.value = '';
   });
   document.getElementById('state').value = '';
+  document.getElementById('subsistema').value = '';
+  // Reset subsistema reveal
+  const subReveal = document.getElementById('subsistemaOtroReveal');
+  if (subReveal) subReveal.classList.remove('open');
   // Reset provider toggle
   STATE.hasProvider = 'no';
   document.querySelectorAll('#providerToggle .yesno-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
@@ -280,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Expose to HTML onclick handlers
+window.handleSubsistema  = handleSubsistema;
 window.goStep          = goStep;
 window.selectIntention = selectIntention;
 window.selectChip      = selectChip;
