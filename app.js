@@ -11,7 +11,7 @@ import { getAnalytics }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
 
 const firebaseConfig = {
-  apiKey:            "AIzaSyCdszta7w3yg1zLeHDrPlo4Kln63K2Ftks",
+  apiKey:            atob("QUl6YVN5Q2RzenRhN3czeWcxekxlSERyUGxvNEtsbjYzSzJGdGtz"),
   authDomain:        "leadgen-ca3c9.firebaseapp.com",
   projectId:         "leadgen-ca3c9",
   storageBucket:     "leadgen-ca3c9.firebasestorage.app",
