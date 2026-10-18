@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSchoolSelect();
   initNavTabs();
   initLookupEnterKey();
+  initPhoneValidation();
 
   // Revisar si viene folio en URL (?folio=HELP-XXXXX)
   const urlParams = new URLSearchParams(window.location.search);
@@ -158,6 +159,29 @@ function initSchoolSelect() {
   }
 }
 
+// ─── PHONE VALIDATION REALTIME ─────────────────────
+function initPhoneValidation() {
+  const phoneInput = document.getElementById('studentPhoneInput');
+  if (!phoneInput) return;
+
+  const sanitizeAndValidate = () => {
+    phoneInput.value = phoneInput.value.replace(/\D/g, '').slice(0, 10);
+    if (phoneInput.value.length === 10) {
+      clearError('err-studentPhone');
+      markInput('studentPhoneInput', false);
+    }
+  };
+
+  phoneInput.addEventListener('input', sanitizeAndValidate);
+  phoneInput.addEventListener('paste', () => setTimeout(sanitizeAndValidate, 0));
+  phoneInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      validateStep2();
+    }
+  });
+}
+
 // ─── WARNING BOX COLLAPSE (CON ESTILO) ────────────
 export function toggleWarningBox() {
   const box = document.getElementById('warningBox');
@@ -204,22 +228,15 @@ export function goStep(stepNumber) {
   STATE.currentStep = stepNumber;
   updateStepperProgress(stepNumber);
 
-  // Al avanzar más allá del paso 1, colapsar con estilo el anuncio de errores comunes
+  // Al avanzar más allá del paso 1, colapsar el aviso de soluciones frecuentes
   if (stepNumber > 1) {
     setWarningBoxCollapsed(true);
   } else {
     setWarningBoxCollapsed(false);
   }
 
-  // Desplazamiento fluido hacia la tarjeta para una experiencia impecable
-  const wizardCard = document.querySelector('.glass-card');
-  if (wizardCard && stepNumber > 1) {
-    const yOffset = -24;
-    const y = wizardCard.getBoundingClientRect().top + window.pageYOffset + yOffset;
-    window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
-  } else {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+  // Desplazamiento seguro y fluido al inicio para mantener el formulario perfectamente centrado en pantalla
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 window.goStep = goStep;
 
@@ -288,7 +305,7 @@ export function validateStep2() {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!email || !re.test(email)) {
-    setError('err-email', 'Ingresa el correo electrónico que usaste para registrarte.');
+    setError('err-email', 'Ingresa tu correo institucional o personal.');
     markInput('emailInput', true);
     ok = false;
   } else {
@@ -307,14 +324,18 @@ export function validateStep2() {
     STATE.data.altEmail = altEmail;
   }
 
-  // Validar WhatsApp: 10 digitos obligatorio, solo MEX o USA
+  // Validar WhatsApp: exactamente 10 dígitos numéricos
   const phoneInput = document.getElementById('studentPhoneInput');
   const phoneCountry = document.getElementById('studentPhoneCountry');
-  const phoneVal = phoneInput ? phoneInput.value.replace(/\D/g, '') : '';
+  const phoneVal = phoneInput ? phoneInput.value.replace(/\D/g, '').trim() : '';
   const countryCode = phoneCountry ? phoneCountry.value : '52';
 
-  if (!phoneVal || phoneVal.length !== 10) {
-    setError('err-studentPhone', 'Ingresa tu número de WhatsApp a 10 dígitos (sin código de país).');
+  if (!phoneVal) {
+    setError('err-studentPhone', 'Por favor ingresa tu número de WhatsApp a 10 dígitos.');
+    if (phoneInput) markInput('studentPhoneInput', true);
+    ok = false;
+  } else if (phoneVal.length !== 10 || !/^\d{10}$/.test(phoneVal)) {
+    setError('err-studentPhone', `El número de WhatsApp debe tener exactamente 10 dígitos (has ingresado ${phoneVal.length} de 10).`);
     if (phoneInput) markInput('studentPhoneInput', true);
     ok = false;
   } else {
@@ -460,7 +481,7 @@ async function submitTicket() {
     'UPSIN': 'UPSIN - Univ. Politécnica de Sinaloa',
     'CETI COLOMOS': 'CETI Colomos - Centro de Enseñanza Técnica Industrial',
     'LAMAR': 'LAMAR - Univ. Guadalajara LAMAR',
-    'CAI': 'CAI - Coordinación de Asuntos Internacionales',
+    'CAI': 'UAN, CAI - Universidad Autónoma de Nayarit (Coord. de Asuntos Internacionales)',
     'UTZIN': 'UTZIN - Universidad Tecnológica de Zinacantepec',
     'UPOTEC': 'UPOTEC - Universidad Politécnica de Otzolotepec',
     'UAEM ENFERMERIA': 'UAEM - Facultad de Enfermería',
@@ -781,19 +802,36 @@ function renderStatusCard(ticket) {
   const assignedPassword = (ticket.assignedPassword || '').trim();
   const assignedCorrectEmail = (ticket.assignedCorrectEmail || '').trim();
   const noteText = (ticket.solutionNote || '').toLowerCase();
-  const isNoUserFound = noteText.includes('no se encontró') || 
-                        noteText.includes('no se encontro') || 
-                        noteText.includes('ningún usuario') || 
-                        noteText.includes('ningun usuario');
 
-  const isDiffEmail = isResolved && !isNoUserFound && (
+  const isCodeUsed = isResolved && (
+    noteText.includes('encontramos tu cuenta') || 
+    noteText.includes('utilizaste tu código') || 
+    noteText.includes('utilizaste tu codigo')
+  );
+
+  const isDiffEmail = isResolved && (
     assignedCorrectEmail.length > 0 || 
     noteText.includes('correo diferente') || 
-    noteText.includes('diste de alta con un correo')
+    noteText.includes('diste de alta con un correo') ||
+    noteText.includes('correo registrado') ||
+    isCodeUsed
+  );
+
+  const isNoUserFound = isResolved && !isDiffEmail && (
+    noteText.includes('no se encontró') || 
+    noteText.includes('no se encontro') || 
+    noteText.includes('ningún usuario') || 
+    noteText.includes('ningun usuario')
   );
 
   const hasPasswordAssigned = isResolved && assignedPassword.length > 0 && !isNoUserFound && !isDiffEmail;
-  const displayRegisteredEmail = assignedCorrectEmail || (ticket.altEmail || ticket.email || '').trim();
+  
+  let displayRegisteredEmail = assignedCorrectEmail;
+  if (!displayRegisteredEmail) {
+    const match = (ticket.solutionNote || '').match(/([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)/);
+    if (match) displayRegisteredEmail = match[1];
+    else displayRegisteredEmail = (ticket.altEmail || ticket.email || '').trim();
+  }
 
   container.innerHTML = `
     <div class="status-card">
@@ -809,39 +847,45 @@ function renderStatusCard(ticket) {
 
       <!-- CASO 1: RESUELTO CON CONTRASEÑA ASIGNADA -->
       ${hasPasswordAssigned ? `
-        <div class="resolved-hero-card">
+        <div class="resolved-hero-card variant-green">
           <div class="resolved-hero-header">
-            <span class="resolved-check-icon">
+            <span class="resolved-check-icon icon-green">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
                 <polyline points="20 6 9 17 4 12"/>
               </svg>
             </span>
             <div>
-              <h4 class="resolved-hero-title">¡Tu solicitud está resuelta!</h4>
-              <p class="resolved-hero-subtitle">Puedes proceder a ingresar a tu portal Richmond Studio con estos datos:</p>
+              <h4 class="resolved-hero-title title-green">¡Tu solicitud está resuelta!</h4>
+              <p class="resolved-hero-subtitle subtitle-green">Puedes proceder a ingresar a tu portal Richmond Studio con estos datos:</p>
             </div>
           </div>
 
-          <div class="resolved-credentials-box">
+          <div class="resolved-credentials-box variant-green">
             <div class="cred-row">
-              <span class="cred-label">Usuario / Correo:</span>
+              <span class="cred-label label-green">Usuario / Correo de Acceso:</span>
               <div class="cred-val-wrap">
-                <code class="cred-val" id="credEmailText">${escapeHtml(ticket.email)}</code>
-                <button type="button" class="btn-copy" onclick="copyToClipboard('${escapeHtml(ticket.email)}', this)">Copiar</button>
+                <div class="cred-val" id="credEmailText">${escapeHtml(ticket.email)}</div>
+                <button type="button" class="btn-copy" onclick="copyToClipboard('${escapeHtml(ticket.email)}', this)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Copiar Correo</span>
+                </button>
               </div>
             </div>
 
             <div class="cred-row">
-              <span class="cred-label">Contraseña asignada:</span>
+              <span class="cred-label label-green">Contraseña asignada:</span>
               <div class="cred-val-wrap">
-                <code class="cred-val highlight" id="credPassText">${escapeHtml(assignedPassword)}</code>
-                <button type="button" class="btn-copy" onclick="copyToClipboard('${escapeHtml(assignedPassword)}', this)">Copiar</button>
+                <div class="cred-val highlight pass" id="credPassText">${escapeHtml(assignedPassword)}</div>
+                <button type="button" class="btn-copy btn-copy-pass" onclick="copyToClipboard('${escapeHtml(assignedPassword)}', this)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Copiar Contraseña</span>
+                </button>
               </div>
             </div>
           </div>
 
           <div class="resolved-action-bar">
-            <a href="https://www.richmondlp.com" target="_blank" rel="noopener noreferrer" class="btn-access-studio" title="Ingresar a la plataforma Richmond Studio">
+            <a href="https://richmondstudio.global/login" target="_blank" rel="noopener noreferrer" class="btn-access-studio" title="Ingresar a la plataforma Richmond Studio">
               <span>Ingresar a mi portal Richmond Studio</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -850,47 +894,54 @@ function renderStatusCard(ticket) {
             </a>
           </div>
 
-          <p class="resolved-tip">
+          <p class="resolved-tip tip-green">
             Una vez dentro, podrás actualizar tu contraseña si lo deseas en la sección <strong>"My Profile"</strong>.
           </p>
         </div>
       ` : ''}
 
-      <!-- CASO: CORREO DIFERENTE DETECTADO (SIN CAMBIO DE CONTRASEÑA) -->
+      <!-- CASO: CORREO DIFERENTE O CUENTA ENCONTRADA (SIN CAMBIO DE CONTRASEÑA) -->
       ${isDiffEmail ? `
-        <div class="resolved-hero-card" style="background: #eff6ff; border: 2px solid #60a5fa; box-shadow: 0 4px 20px rgba(37, 99, 235, 0.12);">
+        <div class="resolved-hero-card variant-blue">
           <div class="resolved-hero-header">
-            <span class="resolved-check-icon" style="background: #2563eb; box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);">
+            <span class="resolved-check-icon icon-blue">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                 <polyline points="22,6 12,13 2,6"/>
               </svg>
             </span>
             <div>
-              <h4 class="resolved-hero-title" style="color: #1e3a8a;">¡Tu cuenta fue localizada en Richmond Studio!</h4>
-              <p class="resolved-hero-subtitle" style="color: #1d4ed8;">Te diste de alta con un correo diferente en la plataforma. Tu usuario de acceso es tu correo tal cual lo registraste (aunque contenga algún error tipográfico):</p>
+              <h4 class="resolved-hero-title title-blue">¡Tu cuenta fue localizada en Richmond Studio!</h4>
+              <p class="resolved-hero-subtitle subtitle-blue">
+                ${isCodeUsed 
+                  ? 'Encontramos tu cuenta, tu registro ya lo completaste y utilizaste tu código (por eso tu código dice inválido, ya que solo se puede usar una vez). Tu cuenta está creada con el correo:' 
+                  : 'Te diste de alta con un correo diferente en Richmond Studio. Tu usuario de acceso es tu correo tal cual lo registraste (incluso si contiene algún error de escritura):'}
+              </p>
             </div>
           </div>
 
-          <div class="resolved-credentials-box" style="background: #ffffff; border: 1.5px solid #bfdbfe;">
-            <div class="cred-row" style="flex-direction: column; align-items: flex-start; gap: 0.4rem;">
-              <span class="cred-label" style="color: #1d4ed8; font-weight: 800; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                Correo registrado en Richmond Studio:
+          <div class="resolved-credentials-box variant-blue">
+            <div class="cred-row">
+              <span class="cred-label label-blue">
+                ${isCodeUsed ? 'Correo con el que está creada tu cuenta:' : 'Correo registrado en Richmond Studio:'}
               </span>
-              <div class="cred-val-wrap" style="width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
-                <code class="cred-val highlight" id="credDiffEmailText" style="font-size: 1.1rem; color: #1e40af; background: #eff6ff; border: 1.5px solid #93c5fd; padding: 0.5rem 0.8rem; border-radius: 8px; flex: 1; word-break: break-all;">${escapeHtml(displayRegisteredEmail)}</code>
-                <button type="button" class="btn-copy" style="background: #2563eb; color: #ffffff; font-weight: 700;" onclick="copyToClipboard('${escapeHtml(displayRegisteredEmail)}', this)">Copiar Correo</button>
+              <div class="cred-val-wrap">
+                <div class="cred-val highlight" id="credDiffEmailText">${escapeHtml(displayRegisteredEmail)}</div>
+                <button type="button" class="btn-copy btn-copy-primary" onclick="copyToClipboard('${escapeHtml(displayRegisteredEmail)}', this)">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Copiar Correo</span>
+                </button>
               </div>
             </div>
 
-            <div style="margin-top: 0.85rem; padding: 0.75rem 0.95rem; background: #f8fafc; border-radius: 10px; border-left: 4px solid #2563eb; font-size: 0.86rem; color: #1e293b; line-height: 1.5;">
+            <div class="cred-info-note">
               <strong style="color: #1e3a8a;">Información de tu Contraseña:</strong><br/>
-              Tu contraseña de acceso es la que tú pusiste en tu registro original (<strong>no es Mexico26*, no se modificó tu contraseña</strong>).
+              A estos alumnos <strong>NO se les cambió la contraseña</strong> (tu contraseña de acceso es la que definiste en tu registro original, no se modificó tu contraseña).
             </div>
           </div>
 
           <div class="resolved-action-bar">
-            <a href="https://www.richmondlp.com" target="_blank" rel="noopener noreferrer" class="btn-access-studio" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);" title="Ingresar a la plataforma Richmond Studio">
+            <a href="https://richmondstudio.global/login" target="_blank" rel="noopener noreferrer" class="btn-access-studio btn-studio-blue" title="Ingresar a la plataforma Richmond Studio">
               <span>Ingresar a mi portal Richmond Studio</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -899,17 +950,19 @@ function renderStatusCard(ticket) {
             </a>
           </div>
 
-          <p class="resolved-tip" style="color: #1e40af;">
-            Si no recuerdas la contraseña que definiste en tu registro, contáctanos por WhatsApp para apoyarte a restablecerla.
-          </p>
+          <div class="resolved-tip-box variant-blue">
+            <strong style="color: #1e3a8a; display: block; margin-bottom: 0.25rem;">¿No recuerdas tu contraseña?</strong>
+            La contraseña es la misma que pusiste cuando hiciste tu registro. En caso de que no la recuerdes o no te deje entrar aun así, levanta un nuevo ticket seleccionando la opción <strong>"No puedo entrar / Invalid Credentials"</strong> y en la solicitud coloca este correo, que es el correo oficial que tenemos en el sistema.
+            <span style="display: block; margin-top: 0.4rem; color: #dc2626; font-weight: 700;">(Importante: NO atendemos cambios ni restablecimiento de contraseña por WhatsApp).</span>
+          </div>
         </div>
       ` : ''}
 
       <!-- CASO 2: NO SE ENCONTRÓ USUARIO (SIN CONTRASEÑA) -->
       ${isNoUserFound ? `
-        <div class="resolved-hero-card" style="background: #fffbeb; border: 2px solid #fcd34d; box-shadow: 0 4px 20px rgba(245, 158, 11, 0.12);">
+        <div class="resolved-hero-card variant-amber">
           <div class="resolved-hero-header">
-            <span class="resolved-check-icon" style="background: #f59e0b; box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);">
+            <span class="resolved-check-icon icon-amber">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <circle cx="12" cy="12" r="10"/>
                 <line x1="12" y1="8" x2="12" y2="12"/>
@@ -917,12 +970,12 @@ function renderStatusCard(ticket) {
               </svg>
             </span>
             <div>
-              <h4 class="resolved-hero-title" style="color: #92400e;">${isResolved ? 'Solicitud Atendida: Usuario No Encontrado' : 'Revisión: Usuario No Encontrado'}</h4>
-              <p class="resolved-hero-subtitle" style="color: #78350f;">No existe una cuenta registrada previa con estos datos en la plataforma Richmond Studio.</p>
+              <h4 class="resolved-hero-title title-amber">${isResolved ? 'Solicitud Atendida: Usuario No Encontrado' : 'Revisión: Usuario No Encontrado'}</h4>
+              <p class="resolved-hero-subtitle subtitle-amber">No existe una cuenta registrada previa con estos datos en la plataforma Richmond Studio.</p>
             </div>
           </div>
 
-          <div style="background: #ffffff; border: 1.5px solid #fde68a; border-radius: 14px; padding: 1.05rem 1.25rem; color: #1e293b; font-size: 0.93rem; line-height: 1.55; font-weight: 600;">
+          <div class="no-user-solution-note">
             ${escapeHtml(ticket.solutionNote || 'No se encontró ningún usuario con esos datos. Favor de revisar e intentar registrar su código de nuevo en la plataforma; mandar foto al asesor vía WhatsApp. Si sigue saliendo inválido se le proporcionará un código de repuesto nuevo.')}
           </div>
 
@@ -938,7 +991,7 @@ function renderStatusCard(ticket) {
             </a>
           </div>
 
-          <p class="resolved-tip" style="color: #92400e;">
+          <p class="resolved-tip tip-amber">
             <strong>Nota:</strong> Al no existir cuenta previa en la plataforma, <strong>NO</strong> se te asignó ninguna contraseña predeterminada. Debes crear tu cuenta registrando tu código del libro.
           </p>
         </div>
@@ -974,6 +1027,15 @@ function renderStatusCard(ticket) {
         <div class="elapsed-time-val" id="liveElapsedTimer">
           Calculando…
         </div>
+        ${!isResolved ? `
+          <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.35rem; display: flex; align-items: center; justify-content: center; gap: 0.35rem;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>Tiempo de resolución: máximo 72 horas (3 días hábiles)</span>
+          </div>
+        ` : ''}
       </div>
 
       <!-- Indicaciones Generales del Asesor si no es caso de "No Usuario" -->
@@ -988,7 +1050,7 @@ function renderStatusCard(ticket) {
           </div>
           <div class="solution-text">${escapeHtml(ticket.solutionNote)}</div>
 
-          ${(ticket.solutionNote.toLowerCase().includes('whatsapp') || ticket.solutionNote.toLowerCase().includes('foto') || ticket.solutionNote.toLowerCase().includes('código') || ticket.solutionNote.toLowerCase().includes('codigo') || ticket.solutionNote.toLowerCase().includes('asesor')) ? `
+          ${(!isDiffEmail && (ticket.solutionNote.toLowerCase().includes('whatsapp') || ticket.solutionNote.toLowerCase().includes('foto') || ticket.solutionNote.toLowerCase().includes('código') || ticket.solutionNote.toLowerCase().includes('codigo') || ticket.solutionNote.toLowerCase().includes('asesor'))) ? `
             <div style="margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px dashed rgba(22, 163, 74, 0.35); display: flex; flex-direction: column; gap: 0.45rem;">
               <span style="font-size: 0.78rem; color: #166534; font-weight: 700;">Envía la foto de tu código directamente a tu asesor aquí:</span>
               <a href="https://wa.me/${ticket.advisorWA || '5216621147374'}?text=${encodeURIComponent(`Hola, envío la foto de mi código respecto a mi solicitud con Folio: ${ticket.folio} (${ticket.fullName})`)}" 
@@ -1142,16 +1204,21 @@ function updateElapsedTimeDisplay(createdAtMillis, resolvedAtMillis, isResolved)
 export function copyToClipboard(text, btn) {
   if (!text) return;
   navigator.clipboard.writeText(text).then(() => {
-    const orig = btn.textContent;
-    btn.textContent = '¡Copiado!';
+    const orig = btn.innerHTML;
+    btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> <span>¡Copiado!</span>`;
     btn.classList.add('copied');
     setTimeout(() => {
-      btn.textContent = orig;
+      btn.innerHTML = orig;
       btn.classList.remove('copied');
     }, 2000);
   }).catch(() => {
-    btn.textContent = '¡Copiado!';
-    setTimeout(() => btn.textContent = 'Copiar', 1500);
+    const orig = btn.innerHTML;
+    btn.innerHTML = `<span>¡Copiado!</span>`;
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = orig;
+      btn.classList.remove('copied');
+    }, 2000);
   });
 }
 window.copyToClipboard = copyToClipboard;
